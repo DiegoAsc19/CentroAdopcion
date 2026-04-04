@@ -13,7 +13,7 @@ def get_dog_by_id(dog_id):
     cur = conn.cursor()
     cur.execute("SELECT id, name, age, breed FROM Dog WHERE id = ?", (dog_id,))
     dog_data = cur.fetchone()
-    conn.close()ah
+    conn.close()
     return dog_data
 
 def register_adoption_transactional(dog_id, adopter_name, adopter_lastname, address, id_card):
