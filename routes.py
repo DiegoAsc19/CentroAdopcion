@@ -1,44 +1,54 @@
-rom flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for
 import database
 import models
 
-app = Flask(_name_)
+app = Flask(__name__)
 
+# --- RUTA PRINCIPAL (CATÁLOGO + HISTORIAL) ---
 @app.route('/')
 def index():
-    # Recuperamos los perros del catálogo real
+    # 1. Obtenemos los perros disponibles para el catálogo
     dogs_data = database.get_available_dogs()
-    # Podemos convertir los datos a objetos 'Dog' si quisiéramos usar métodos de la clase
     available_dogs = [models.Dog(row[0], row[1], row[2], row[3]) for row in dogs_data]
     
-    return render_template('catalogo.html', dogs=available_dogs)
+    # 2. Obtenemos el historial de adopciones para el panel del menú
+    adoptions_history = database.get_adoption_history()
+    
+    # 3. Enviamos AMBAS listas al mismo template: catalogo.html
+    return render_template('catalogo.html', dogs=available_dogs, adoptions=adoptions_history)
 
+
+# --- RUTA PARA VER EL FORMULARIO DE UN PERRO ESPECÍFICO ---
 @app.route('/adoptar/<int:dog_id>')
-def form_adopcion(dog_id):
-    dog = database.get_dog_by_id(dog_id)
-    if not dog:
-        return "Perrito no encontrado", 404
-    dog_obj = models.Dog(dog[0], dog[1], dog[2], dog[3])
-    return render_template('confirmacion.html', dog=dog_obj)
+def adoptar(dog_id):
+    dog_data = database.get_dog_by_id(dog_id)
+    if dog_data:
+        dog = models.Dog(dog_data[0], dog_data[1], dog_data[2], dog_data[3])
+        return render_template('confirmacion.html', dog=dog)
+    return redirect(url_for('index'))
 
+
+# --- RUTA PARA PROCESAR EL FORMULARIO (POST) ---
 @app.route('/confirmar_adopcion', methods=['POST'])
-def procesar_adopcion():
-    # Recibimos datos del formulario de la web
+def confirmar_adopcion():
+    # Recolectamos los datos del formulario
     dog_id = request.form['dog_id']
     name = request.form['name']
     lastname = request.form['lastname']
-    address = request.form['address']
     id_card = request.form['id_card']
-    
-    # Ejecutamos la lógica de negocio modular
+    address = request.form['address']
+
+    # Intentamos registrar la transacción en MariaDB
     success = database.register_adoption_transactional(dog_id, name, lastname, address, id_card)
     
     if success:
-        dog = database.get_dog_by_id(dog_id)
-        return f"<h1>¡Felicidades! Has adoptado a {dog[1]} exitosamente.</h1><a href='/'>Volver al catálogo</a>"
+        # Si sale bien, redirigimos al inicio para ver el historial actualizado
+        return redirect(url_for('index'))
     else:
-        return "Error al procesar la adopción. Por favor, inténtalo de nuevo."
+        return "<h1>❌ Error al procesar la adopción</h1><a href='/'>Volver al inicio</a>"
 
-if _name_ == '_main_':
-    # Asegúrate de que las tablas estén creadas antes de correr la web.
+
+# --- BLOQUE DE EJECUCIÓN ---
+if __name__ == '__main__':
+    # Usamos host 0.0.0.0 para que puedas probarlo desde la IP de tu laptop
     app.run(debug=True, host='0.0.0.0', port=5000)

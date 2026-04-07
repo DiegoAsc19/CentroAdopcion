@@ -1,0 +1,218 @@
+/* --- VARIABLES DE DISEÑO --- */
+:root {
+    --primary: #4a90e2;        /* Azul Moderno */
+    --primary-hover: #357abd;
+    --accent: #ff9f43;         /* Naranja suave */
+    --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    --white: #ffffff;
+    --text-dark: #2d3436;
+    --text-light: #636e72;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* --- ESTILOS GENERALES --- */
+body {
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
+    background: var(--background);
+    margin: 0;
+    color: var(--text-dark);
+}
+
+/* --- NAVEGACIÓN --- */
+.navbar {
+    background: var(--white);
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    border-bottom: 3px solid var(--primary);
+}
+
+.navbar h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: var(--primary);
+    letter-spacing: 1px;
+}
+
+/* --- PÁGINA PRINCIPAL: CATÁLOGO --- */
+.main-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.grid-dogs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.dog-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.dog-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(74, 144, 226, 0.2);
+}
+
+.dog-card h2 {
+    color: var(--primary);
+    margin-bottom: 5px;
+}
+
+.dog-card p {
+    color: var(--text-light);
+    margin: 10px 0;
+}
+
+/* Botón de la tarjeta */
+.btn-card {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 15px;
+    transition: 0.3s;
+}
+
+.btn-card:hover {
+    background: #e67e22;
+    box-shadow: 0 5px 15px rgba(230, 126, 34, 0.4);
+}
+
+/* --- ESTILOS MEJORADOS PARA EL FORMULARIO --- */
+
+/* Esta clase se aplica al body de la página de confirmación */
+.pagina-confirmacion {
+    background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.card-formulario {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 450px;
+    border-top: 8px solid #4a90e2; /* Detalle azul arriba */
+}
+
+.card-formulario h1 {
+    color: #2c3e50;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.card-formulario p {
+    color: #7f8c8d;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Estilo de los campos de texto */
+.grupo-input {
+    margin-bottom: 20px;
+}
+
+.grupo-input label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #34495e;
+}
+
+.grupo-input input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #edeff2;
+    border-radius: 10px;
+    box-sizing: border-box; /* IMPORTANTE: evita que el input se salga del cuadro */
+    transition: all 0.3s;
+}
+
+.grupo-input input:focus {
+    border-color: #4a90e2;
+    outline: none;
+    background-color: #f0f7ff;
+}
+
+/* El botón de confirmar */
+.btn-finalizar {
+    background-color: #f39c12;
+    color: white;
+    border: none;
+    width: 100%;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 10px;
+}
+
+.btn-finalizar:hover {
+    background-color: #e67e22;
+}
+/* --- ESTILO DEL PANEL DE HISTORIAL --- */
+.history-panel {
+    background: white;
+    margin-bottom: 30px;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.history-panel summary {
+    padding: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    color: var(--primary);
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.history-panel summary:hover {
+    background: #f0f7ff;
+}
+
+.history-table-container {
+    padding: 0 20px 20px 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    text-align: left;
+    color: var(--text-light);
+    border-bottom: 2px solid var(--primary);
+    padding: 10px;
+}
+
+td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    font-size: 0.9rem;
+}

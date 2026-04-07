@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Adopta a {{ dog.name }}</title>
+</head>
+<body class="pagina-confirmacion"> <div class="card-formulario">
+        <h1>Finalizar Adopción</h1>
+        <p>Estás a punto de darle un hogar a <strong>{{ dog.name }}</strong></p>
+
+        <form action="/confirmar_adopcion" method="POST">
+            <input type="hidden" name="dog_id" value="{{ dog.id }}">
+
+            <div class="grupo-input">
+                <label>Nombre</label>
+                <input type="text" name="name" placeholder="Escribe tu nombre" required>
+            </div>
+
+            <div class="grupo-input">
+                <label>Apellido</label>
+                <input type="text" name="lastname" placeholder="Escribe tu apellido" required>
+            </div>
+
+            <div class="grupo-input">
+                <label>Cédula / ID Card</label>
+                <input type="text" name="id_card" placeholder="Tu número de identificación" required>
+            </div>
+
+            <div class="grupo-input">
+                <label>Dirección</label>
+                <input type="text" name="address" placeholder="Ej: San Salvador, Calle 2" required>
+            </div>
+
+            <button type="submit" class="btn-finalizar">
+                Confirmar Compromiso 🐾
+            </button>
+        </form>
+    </div>
+
+</body>
+</html>

@@ -1,5 +1,6 @@
+
 class Dog:
-    def _init_(self, dog_id, name, age, breed, adopted=False):
+    def __init__(self, dog_id, name, age, breed, adopted=False): # Doble guion bajo
         self.id = dog_id
         self.name = name
         self.age = age
@@ -7,8 +8,8 @@ class Dog:
         self.adopted = adopted
 
 class Adopter:
-    def _init_(self, adopter_id, name, lastName, address, id_card=None):
-        self.adopter_id = adopter_id # Referecia a Person.id
+    def __init__(self, adopter_id, name, lastName, address, id_card=None): # Doble guion bajo
+        self.adopter_id = adopter_id 
         self.name = name
         self.lastName = lastName
         self.address = address

@@ -2,22 +2,82 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Centro de Adopción de Perritos</title>
-    <style>
-        .dog-card { border: 1px solid #ccc; padding: 20px; margin: 10px; width: 200px; text-align: center; display: inline-block; }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centro de Adopción "Huellitas"</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Perritos en Catálogo</h1>
-    <div class="container">
-        {% for dog in dogs %}
-        <div class="dog-card">
-            <h2>{{ dog.name }}</h2>
-            <p><strong>Edad:</strong> {{ dog.age }} años</p>
-            <p><strong>Raza:</strong> {{ dog.breed }}</p>
-            <a href="/adoptar/{{ dog.id }}">¡Adoptame!</a>
-        </div>
-        {% endfor %}
+
+    <div class="navbar">
+        <h1>🐾 Centro de Adopción "Huellitas"</h1>
     </div>
+
+    <div class="main-container">
+
+        <h2 style="text-align: center; color: #4a90e2; margin-bottom: 30px;">Nuestros Perritos Buscando Hogar</h2>
+        
+        <div class="grid-dogs">
+            {% for dog in dogs %}
+            <div class="dog-card">
+                <div class="dog-info">
+                    <h2 style="color: #4a90e2;">{{ dog.name }}</h2>
+                    <p><strong>Raza:</strong> {{ dog.breed }}</p>
+                    <p><strong>Edad:</strong> {{ dog.age }} años</p>
+                </div>
+                <a href="/adoptar/{{ dog.id }}" class="btn-card">¡Quiero Adoptarlo!</a>
+            </div>
+            {% endfor %}
+
+            {% if not dogs %}
+            <div style="text-align: center; width: 100%; padding: 50px;">
+                <p>¡Increíble! Todos los perritos han sido adoptados hoy. 🎉</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 50px 0;">
+
+        <div class="history-panel">
+            <details>
+                <summary>
+                    <span style="cursor: pointer; font-weight: 600; color: #4a90e2;">
+                        📋 Ver Historial de Adopciones Recientes
+                    </span>
+                </summary>
+                
+                <div class="history-table-container" style="margin-top: 20px;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid #4a90e2; text-align: left;">
+                                <th style="padding: 12px;">Mascota</th>
+                                <th style="padding: 12px;">Adoptante</th>
+                                <th style="padding: 12px;">Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in adoptions %}
+                            <tr style="border-bottom: 1px solid #f5f5f5;">
+                                <td style="padding: 12px;"><strong>{{ item[0] }}</strong></td>
+                                <td style="padding: 12px;">{{ item[1] }} {{ item[2] }}</td>
+                                <td style="padding: 12px; color: #888; font-size: 0.85rem;">{{ item[3] }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    {% if not adoptions %}
+                    <p style="text-align: center; padding: 20px; color: #999;">
+                        Aún no se han registrado adopciones en el sistema.
+                    </p>
+                    {% endif %}
+                </div>
+            </details>
+        </div>
+
+    </div> <footer style="text-align: center; padding: 40px; color: #bbb; font-size: 0.8rem;">
+        &copy; 2026 Centro de Adopción Huellitas - Proyecto de Desarrollo
+    </footer>
+
 </body>
 </html>
